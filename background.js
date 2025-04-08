@@ -16,9 +16,9 @@ chrome.contextMenus.onClicked.addListener((info, tab) => {
   }
 });
 
-// This function is injected into the webpage and executed in its context.
 function convertSelectedMeasurement() {
-  // Helper function to create and position a popup near the selection.
+  // Since when we use chrome.scripting.executeScript, the injected function runs in the context of the webpage, not in 
+  // the background script, we need to define the showPopup function here.
   function showPopup(message) {
     // Create a new div element for the popup.
     let popup = document.createElement("div");
@@ -31,10 +31,7 @@ function convertSelectedMeasurement() {
       rect = selection.getRangeAt(0).getBoundingClientRect();
     }
 
-    // Apply inline styles to the popup.
     popup.style.position = "absolute";
-    // Position below the selected text if we obtained coordinates,
-    // otherwise fallback to a default position.
     if (rect) {
       popup.style.top = (rect.top + window.scrollY + 20) + "px";
       popup.style.left = (rect.left + window.scrollX) + "px";
@@ -50,7 +47,6 @@ function convertSelectedMeasurement() {
     popup.style.boxShadow = "0 2px 4px rgba(0,0,0,0.2)";
     popup.style.zIndex = 10000;
 
-    // Append the popup to the body.
     document.body.appendChild(popup);
 
     // Remove the popup after 3 seconds.
@@ -59,10 +55,8 @@ function convertSelectedMeasurement() {
     }, 3000);
   }
 
-  // Obtain the user-selected text from the page.
   const selectedText = window.getSelection().toString().trim();
 
-  // Regular expression to match numbers with "ft" or "lb"/"lbs".
   const regex = /([\d.]+)\s*(ft|mi|miles|lb|lbs|in)/i;
   const match = selectedText.match(regex);
 
@@ -75,7 +69,6 @@ function convertSelectedMeasurement() {
   const unit = match[2].toLowerCase();
   let convertedValue, convertedUnit, originalUnit, conversionFactor;
 
-  // Conversion logic based on the detected unit.
   if (unit === "ft") {
     conversionFactor = 0.3048;
     convertedValue = value * conversionFactor;
@@ -98,7 +91,6 @@ function convertSelectedMeasurement() {
     convertedUnit = "cm";
   }
 
-  // Format the conversion result and display it in a popup.
   const resultMessage = `${value} ${originalUnit} ≈ ${convertedValue.toFixed(2)} ${convertedUnit}`;
   showPopup(resultMessage);
 }
