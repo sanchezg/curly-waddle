@@ -1,0 +1,14 @@
+{
+    "manifest_version": 3,
+    "name": "Measurement Converter",
+    "description": "Select a measurement (ft or lb) on any page and convert to meters or kilograms.",
+    "version": "1.0",
+    "permissions": [
+      "contextMenus",
+      "activeTab",
+      "scripting"
+    ],
+    "background": {
+      "service_worker": "background.js"
+    }
+}
