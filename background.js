@@ -1,4 +1,3 @@
-// Register the context menu when the extension is installed
 chrome.runtime.onInstalled.addListener(() => {
   chrome.contextMenus.create({
     id: "convert-measurement",
@@ -20,11 +19,9 @@ function convertSelectedMeasurement() {
   // Since when we use chrome.scripting.executeScript, the injected function runs in the context of the webpage, not in 
   // the background script, we need to define the showPopup function here.
   function showPopup(message) {
-    // Create a new div element for the popup.
     let popup = document.createElement("div");
     popup.innerText = message;
 
-    // Determine the position based on the current text selection.
     let selection = window.getSelection();
     let rect;
     if (selection.rangeCount > 0) {
