@@ -14,3 +14,5 @@ This is a quick chrome extension to convert from imperial to metrics units.
 2. Select a measurement (e.g., 10 ft or 5 lb).
 3. Right-click and select Convert measurement.
 4. A small HTML is rendered just at a side of the measurement.
+
+![extension](https://github.com/user-attachments/assets/cd003db4-20c8-4eab-9e35-b58e5ea64d36)
